@@ -1,0 +1,12 @@
+.venv/
+.env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+.ipynb_checkpoints/
+delta_output/
+delta_int/
+delta_long/
+*.part

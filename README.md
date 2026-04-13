@@ -5,7 +5,7 @@ Este cronograma foi criado para preparação intensiva para a certificação Dat
 ---
 
 ## Semana 1: Internals & Query Optimization
-- [ ] **Dia 1:** Otimização de Schemas e Evolução (MergeSchema no Delta). Por que Long é melhor que Integer em escala?
+- [X] **Dia 1:** Otimização de Schemas e Evolução (MergeSchema no Delta). Por que Long é melhor que Integer em escala?
 - [ ] **Dia 2:** Catalyst Optimizer: Analisar o Physical Plan (`df.explain(True)`). Identificar Predicate Pushdown e Column Pruning.
 - [ ] **Dia 3:** Gerenciamento de Memória: Como o Spark divide a RAM (Storage vs execution memory).
 - [ ] **Dia 4:** Arquivos Pequenos (Small File Problem): Estratégias de repartition vs coalesce e o impacto no IO.
