@@ -28,3 +28,30 @@ df_int.show(3)
 
 df_long.write.format("delta").mode("overwrite").save("delta_long")
 df_int.write.format("delta").mode("overwrite").save("delta_int")
+
+# --- Schema Evolution com mergeSchema ---
+
+# 1) Cria um novo DF com uma coluna extra que não existe na tabela delta_long
+from pyspark.sql.functions import lit
+
+df_com_nome = spark.range(5).withColumn("nome", lit("spark"))
+
+print("Schema do novo DF (tem coluna extra 'nome'):")
+df_com_nome.printSchema()
+
+# 2) Sem mergeSchema=True, este append quebraria com erro de schema incompatível
+# df_com_nome.write.format("delta").mode("append").save("delta_long")  # ← ERRO
+
+# 3) Com mergeSchema=True, o Delta aceita a nova coluna e evolui o schema
+df_com_nome.write.format("delta") \
+    .mode("append") \
+    .option("mergeSchema", "true") \
+    .save("delta_long")
+
+# 4) Lê de volta e mostra o schema evoluído
+print("Schema da tabela delta_long após mergeSchema:")
+spark.read.format("delta").load("delta_long").printSchema()
+
+# Linhas antigas têm null na coluna 'nome', novas têm o valor
+print("Amostra com a coluna nova (antigas ficam null):")
+spark.read.format("delta").load("delta_long").orderBy("id").show(8)
