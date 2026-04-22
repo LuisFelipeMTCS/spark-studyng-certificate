@@ -8,7 +8,7 @@ from pyspark.sql.functions import col, rand, lit, when
 
 spark = SparkSession.builder \
     .appName("challenge 3") \
-    .config("spark.driver.memory", "4g") \
+    .config("spark.driver.memory", "2g") \
     .config("spark.jars.packages", "io.delta:delta-spark_2.13:4.0.0") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
@@ -35,8 +35,9 @@ print("Total de linhas:", df.count())
 
 
 
-# resultado = df.groupBy("pais", "genero") \
-#     .agg({"salario": "sum", "idade": "avg"}) \
-#     .orderBy("pais", "genero")
+resultado = df.groupBy("pais", "genero") \
+    .agg({"salario": "sum", "idade": "avg"}) \
+    .orderBy("pais", "genero")
 
+resultado.show()
 df.show(10)
